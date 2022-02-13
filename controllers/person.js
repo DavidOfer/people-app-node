@@ -2,7 +2,7 @@ const Person = require('../models/Person')
 const { validationResult } = require('express-validator');
 
 exports.getPersons = async (req, res, next) => {
-    const perPage = 10;
+    const perPage = req.query.perPage || 10;
     const currentPage = req.query.page || 0;
     const sortBy = req.query.sortBy || 'idNumber';
     console.log(sortBy)
@@ -10,6 +10,7 @@ exports.getPersons = async (req, res, next) => {
     const sort = {}
     sort[sortBy] = order;
     console.log(sort)
+    console.log(perPage)
     try {
         // await new Promise(resolve => setTimeout(resolve, 1000))
         const count = await Person.find().countDocuments()
